@@ -8,6 +8,11 @@ common_includes += hardware/qcom/display-caf/libexternal
 common_includes += hardware/qcom/display-caf/libqservice
 common_includes += hardware/qcom/display-caf/libvirtual
 
+ifeq ($(TARGET_USES_POST_PROCESSING),true)
+    common_flags     += -DUSES_POST_PROCESSING
+    common_includes += $(TARGET_OUT_HEADERS)/pp/inc
+endif
+
 common_header_export_path := qcom/display
 
 #Common libraries external to display-caf HAL
@@ -44,3 +49,8 @@ endif
 ifneq ($(TARGET_DISPLAY_INSECURE_MM_HEAP),true)
     common_flags += -DSECURE_MM_HEAP
 endif
+
+ifeq ($(TARGET_DISPLAY_USE_RETIRE_FENCE),true)
+    common_flags += -DUSE_RETIRE_FENCE
+endif
+
